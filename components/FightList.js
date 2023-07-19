@@ -10,7 +10,7 @@ import { useAuth } from "../hooks/useAuth";
 
 const MatchesList = ({ eventData, userPredictions }) => {
   const prevPredictions = userPredictions ? userPredictions.predictions : null;
-  const date = "2023-07-30";
+  const date = eventData.eventDate || "2024-07-30";
   const eventTitle = eventData.eventTitle;
   const [isClosed, setIsClosed] = useState(false);
   const [predictions, setPredictions] = useState([]);
