@@ -1,8 +1,12 @@
 import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
+import { useAuth } from "../hooks/useAuth";
+
 const FightItem = ({ fight, updatePrediction, prevPredictions }) => {
   const [winner, setWinner] = useState("");
   const [method, setMethod] = useState("");
-
+  const router = useRouter();
+  const { isLoggedIn } = useAuth();
   useEffect(() => {
     // Check if the fightId exists in the prevPredictions array
     let prevPrediction;
@@ -33,8 +37,17 @@ const FightItem = ({ fight, updatePrediction, prevPredictions }) => {
   const bluePlayer =
     fight.fighters[fight.fighters[0].corner === "blue" ? 0 : 1].name;
 
+  const handleClick = () => {
+    if (!isLoggedIn) {
+      router.push("/login"); // Redirect to the login page if not logged in
+    }
+  };
+
   return (
-    <div className="flex flex-row items-center justify-around h-[200px] lg:w-3/4 w-[90%] shadow-md hover:shadow-lg transition-shadow duration-300 bg-white border border-[#FFF] border-solid border-4">
+    <div
+      className="flex flex-row items-center justify-around h-[200px] lg:w-3/4 w-[90%] shadow-md hover:shadow-lg transition-shadow duration-300 bg-white border border-[#FFF] border-solid border-4"
+      onClick={handleClick}
+    >
       <div
         className={`flex flex-col items-center justify-center bg-red-100  h-full w-1/3 ${
           winner === "red" ? "bg-red-200" : ""

@@ -4,6 +4,7 @@ import api from "../utils/api";
 import { useAuth } from "../hooks/useAuth";
 import Loader from "../components/Loader";
 import { useRouter } from "next/router";
+import Image from "next/image";
 const UserRankTable = () => {
   const [userRankData, setUserRankData] = useState([]);
   const [userPredictions, setUserPredictions] = useState([]);
@@ -123,9 +124,9 @@ const UserRankTable = () => {
                 <thead>
                   <tr className="bg-gray-900 text-white">
                     <th className="p-2 text-center">Fight</th>
-                    <th className="p-2 text-center">Red Player</th>
+                    <th className="p-2 text-center">Red Corner</th>
                     <th className="p-2 text-center">Win Method</th>
-                    <th className="p-2 text-center">Blue Player</th>
+                    <th className="p-2 text-center">Blue Corner</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -143,9 +144,21 @@ const UserRankTable = () => {
                       >
                         {userPredictions.find(
                           (p) => p.fightId._id === fight._id
-                        ).winnerFighter === "red"
-                          ? fight.fighters[0].name + "🏆"
-                          : fight.fighters[0].name}
+                        ).winnerFighter === "red" ? (
+                          <div className="flex justify-center">
+                            <span>{fight.fighters[0].name}</span>
+                            <span className="">
+                              <Image
+                                src="/box.svg"
+                                alt="box"
+                                width="20"
+                                height="30"
+                              />
+                            </span>
+                          </div>
+                        ) : (
+                          fight.fighters[0].name
+                        )}
                       </td>
                       <td className={`p-2 text-center bg-gray-300 lg:px-4`}>
                         {
@@ -165,9 +178,21 @@ const UserRankTable = () => {
                       >
                         {userPredictions.find(
                           (p) => p.fightId._id === fight._id
-                        ).winnerFighter === "blue"
-                          ? fight.fighters[1].name + "🏆"
-                          : fight.fighters[1].name}
+                        ).winnerFighter === "blue" ? (
+                          <div className="flex justify-center">
+                            {fight.fighters[1].name}
+                            <span>
+                              <Image
+                                src="/box.svg"
+                                alt="box"
+                                width="20"
+                                height="30"
+                              />
+                            </span>
+                          </div>
+                        ) : (
+                          fight.fighters[1].name
+                        )}
                       </td>
                     </tr>
                   ))}
