@@ -5,9 +5,12 @@ const FightItem = ({ fight, updatePrediction, prevPredictions }) => {
 
   useEffect(() => {
     // Check if the fightId exists in the prevPredictions array
-    const prevPrediction = prevPredictions.find(
-      (prediction) => prediction.fightId._id === fight._id
-    );
+    let prevPrediction;
+    if (prevPredictions) {
+      prevPrediction = prevPredictions.find(
+        (prediction) => prediction.fightId._id === fight._id
+      );
+    }
 
     if (prevPrediction) {
       setWinner(prevPrediction.winnerFighter);

@@ -3,18 +3,21 @@ import Navbar from "../components/Navbar";
 import api from "../utils/api";
 import { useAuth } from "../hooks/useAuth";
 import Loader from "../components/Loader";
+import { useRouter } from "next/router";
 const UserRankTable = () => {
   const [userRankData, setUserRankData] = useState([]);
   const [userPredictions, setUserPredictions] = useState([]);
   const [eventData, setEventData] = useState([]);
   const [showPredictions, setShowPredictions] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-
+  const { isLoggedIn } = useAuth();
+  const router = useRouter();
   const { getUser } = useAuth();
   const userData = getUser();
   const username = userData ? userData.name : null;
 
   useEffect(() => {
+    if (!isLoggedIn) router.push("/login");
     const fetchStandingsData = async () => {
       try {
         const response = await api.get(

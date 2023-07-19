@@ -19,10 +19,12 @@ export default function Home() {
         const eventData = eventDataResponse.data.data;
         setEvent(eventData);
 
-        const userPredictionsResponse = await api.get(
-          "/api/v1/user/predictions/"
-        );
-        const userPredictionsData = userPredictionsResponse.data.data;
+        let userPredictionsResponse;
+        let userPredictionsData;
+        if (isLoggedIn) {
+          userPredictionsResponse = await api.get("/api/v1/user/predictions/");
+          userPredictionsData = userPredictionsResponse.data.data;
+        }
 
         setUserPredictions(userPredictionsData);
 

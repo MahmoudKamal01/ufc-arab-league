@@ -8,7 +8,7 @@ import api from "../utils/api";
 
 import { useAuth } from "../hooks/useAuth";
 const MatchesList = ({ eventData, userPredictions }) => {
-  const prevPredictions = userPredictions.predictions;
+  const prevPredictions = userPredictions ? userPredictions.predictions : null;
   const date = "2023-07-30";
   const eventTitle = eventData.eventTitle;
   const [isClosed, setIsClosed] = useState(false);
