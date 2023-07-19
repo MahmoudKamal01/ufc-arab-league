@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import axios from "axios";
 import { useAuth } from "../hooks/useAuth";
+import api from "../utils/api";
 
 const Authentication = () => {
   const [email, setEmail] = useState("");
@@ -25,8 +26,8 @@ const Authentication = () => {
 
     try {
       setIsLoading(true);
-      const response = await axios.post(
-        "https://ufc-arab-league.onrender.com/api/v1/auth/otp/login",
+      const response = await api.post(
+        "/api/v1/auth/otp/login",
         {
           email,
         },
@@ -51,14 +52,14 @@ const Authentication = () => {
     }
 
     try {
-      const response = await axios.post(
-        "https://ufc-arab-league.onrender.com/api/v1/auth/otp/verify",
+      const response = await api.post(
+        "/api/v1/auth/otp/verify",
         {
           verificationCode: code,
         },
         { withCredentials: true }
       );
-      console.log("ss", response.data.token);
+      console.log("rrrr", response);
       handleLogin(response.data.token);
       toast.success("Authenticated successfully ✔ Redirecting to home page");
       setTimeout(() => {
@@ -73,8 +74,8 @@ const Authentication = () => {
   const handleResendCode = async () => {
     try {
       setIsLoading(true);
-      const response = await axios.post(
-        "https://ufc-arab-league.onrender.com/api/v1/auth/otp/login",
+      const response = await api.post(
+        "/api/v1/auth/otp/login",
         {
           email,
         },

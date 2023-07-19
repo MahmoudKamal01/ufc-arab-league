@@ -1,15 +1,24 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import Cookies from "js-cookie";
+import { useCookies } from "react-cookie";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import jwt from "jsonwebtoken";
+import Cookies from "js-cookie";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [cookies, removeCookie] = useCookies([]);
 
   // Function to check token presence in the cookie and update isLoggedIn state
   const checkTokenPresence = () => {
+    // const decodedToken = jwt.decode(cookies.token); // Decode the token
+    // setIsLoggedIn(
+    //   decodedToken && decodedToken.tokenUser && decodedToken.tokenUser.name
+    //     ? true
+    //     : false
+    // );
     const authToken = Cookies.get("token");
     setIsLoggedIn(authToken ? true : false);
   };
@@ -24,7 +33,14 @@ export const AuthProvider = ({ children }) => {
     checkTokenPresence();
   };
 
+  const getUser = () => {
+    const token = Cookies.set("token", token);
+    const { name, id } = jwt.decode(token);
+    checkTokenPresence();
+  };
+
   const handleLogout = () => {
+    removeCookie("token");
     Cookies.remove("token");
     checkTokenPresence();
     toast.success("Logged out successfully ✔ Redirecting to home page");

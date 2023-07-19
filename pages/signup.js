@@ -5,6 +5,7 @@ import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import api from "../utils/api";
 
 const Signup = () => {
   const [email, setEmail] = useState("");
@@ -39,8 +40,8 @@ const Signup = () => {
 
     try {
       setIsLoading(true);
-      const response = await axios.post(
-        "https://ufc-arab-league.onrender.com/api/v1/auth/otp/register",
+      const response = await api.post(
+        "/api/v1/auth/otp/register",
         { email, name },
         { withCredentials: true }
       );

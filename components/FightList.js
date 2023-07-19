@@ -4,10 +4,11 @@ import { useEffect, useState } from "react";
 import moment from "moment";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import axios from "axios";
+import api from "../utils/api";
+
 import { useAuth } from "../hooks/useAuth";
 const MatchesList = ({ eventData }) => {
-  const date = "2023-07-19";
+  const date = "2023-07-30";
   const eventTitle = eventData.eventTitle;
   const [isClosed, setIsClosed] = useState(false);
   const [predictions, setPredictions] = useState([]);
@@ -37,15 +38,11 @@ const MatchesList = ({ eventData }) => {
         return;
       }
 
-      // User is logged in and all predictions are made, perform form submission logic here
-      const body = JSON.stringify({
+      const body = {
         predictions: predictions,
-      });
-      axios
-        .put(
-          "https://ufc-arab-league.onrender.com/api/v1/user/predictions",
-          body
-        )
+      };
+      api
+        .put("/api/v1/user/predictions", body)
         .then((response) => {
           console.log("pred res", response.data); // Response from the server after successful submission
           toast.success("Predictions submitted successfully!");
@@ -56,7 +53,6 @@ const MatchesList = ({ eventData }) => {
         });
 
       // console.log({ predictions: predictions }); // Response from the server after successful submission
-      toast.success("Predictions submitted successfully!");
     } else {
       // User is not logged in, show a Toastify notification
 
