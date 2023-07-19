@@ -34,9 +34,9 @@ export const AuthProvider = ({ children }) => {
   };
 
   const getUser = () => {
-    const token = Cookies.set("token", token);
-    const { name, id } = jwt.decode(token);
-    checkTokenPresence();
+    const token = Cookies.get("token");
+    const payload = jwt.decode(token);
+    return payload;
   };
 
   const handleLogout = () => {
@@ -50,7 +50,9 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, handleLogin, handleLogout }}>
+    <AuthContext.Provider
+      value={{ isLoggedIn, handleLogin, handleLogout, getUser }}
+    >
       {children}
     </AuthContext.Provider>
   );

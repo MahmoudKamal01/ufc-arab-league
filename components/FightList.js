@@ -7,7 +7,8 @@ import "react-toastify/dist/ReactToastify.css";
 import api from "../utils/api";
 
 import { useAuth } from "../hooks/useAuth";
-const MatchesList = ({ eventData }) => {
+const MatchesList = ({ eventData, userPredictions }) => {
+  const prevPredictions = userPredictions.predictions;
   const date = "2023-07-30";
   const eventTitle = eventData.eventTitle;
   const [isClosed, setIsClosed] = useState(false);
@@ -109,11 +110,86 @@ const MatchesList = ({ eventData }) => {
         {eventTitle.toUpperCase() || eventTitle}
       </h1>
       <Countdown date={date} />
+      {/* {prevPredictions.map((fight) => (
+        <div
+          key={fight.fightId._id}
+          className="flex flex-row items-center justify-around h-[200px] lg:w-3/4 w-[90%] shadow-md hover:shadow-lg transition-shadow duration-300 bg-white border border-[#FFF] border-solid border-4"
+        >
+          <div
+            className={`flex flex-col items-center justify-center bg-red-100 h-full w-1/3 ${
+              fight.winnerFighter === "red" ? "bg-red-200" : ""
+            }`}
+          >
+            <button
+              className={`p-2 border lg:text-xl font-bold rounded h-full w-full ${
+                fight.winnerFighter === "red" ? "bg-red-500 text-white" : ""
+              } hover:bg-red-500 hover:text-white transition-colors duration-300 player-button`}
+              onClick={() => handleWinnerChange("red")}
+            >
+              redPlayer
+            </button>
+          </div>
+          <div className="flex flex-col bg-white w-[33.3%] h-full">
+            <button
+              className={`h-1/3 p-2 border ${
+                fight.winMethod === "KO/TKO"
+                  ? "bg-gray-500 text-white"
+                  : "bg-gray-100"
+              } ${
+                fight.winMethod === "KO/TKO" ? "text-white" : ""
+              } hover:bg-gray-500 hover:text-white transition-colors duration-300`}
+              onClick={() => handleMethodChange("KO/TKO")}
+            >
+              KO/TKO
+            </button>
+            <button
+              className={`h-1/3 p-2 border ${
+                fight.winMethod === "Submission"
+                  ? "bg-gray-500 text-white"
+                  : "bg-gray-100"
+              } ${
+                fight.winMethod === "Submission" ? "text-white" : ""
+              } hover:bg-gray-500 hover:text-white transition-colors duration-300`}
+              onClick={() => handleMethodChange("Submission")}
+            >
+              Submission
+            </button>
+            <button
+              className={`h-1/3 p-2 border ${
+                fight.winMethod === "Decision"
+                  ? "bg-gray-500 text-white"
+                  : "bg-gray-100"
+              } ${
+                fight.winMethod === "Decision" ? "text-white" : ""
+              } hover:bg-gray-500 hover:text-white transition-colors duration-300`}
+              onClick={() => handleMethodChange("Decision")}
+            >
+              Decision
+            </button>
+          </div>
+          <div
+            className={`flex flex-col items-center justify-center bg-blue-100 h-full w-1/3 ${
+              fight.winnerFighter === "blue" ? "bg-blue-200" : ""
+            }`}
+          >
+            <button
+              className={`p-2 border h-full w-full lg:text-xl font-bold rounded ${
+                fight.winnerFighter === "blue" ? "bg-blue-500 text-white" : ""
+              } hover:bg-blue-500 hover:text-white transition-colors duration-300 player-button`}
+              onClick={() => handleWinnerChange("blue")}
+            >
+              bluePlayer
+            </button>
+          </div>
+        </div>
+      ))} */}
+
       {eventData.fights.map((fight) => (
         <FightItem
           fight={fight}
           key={fight._id}
           updatePrediction={updatePrediction}
+          prevPredictions={prevPredictions}
         />
       ))}
       <div className="mt-4">

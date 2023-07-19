@@ -1,8 +1,19 @@
-import { useState } from "react";
-
-const FightItem = ({ fight, updatePrediction }) => {
+import { useState, useEffect } from "react";
+const FightItem = ({ fight, updatePrediction, prevPredictions }) => {
   const [winner, setWinner] = useState("");
   const [method, setMethod] = useState("");
+
+  useEffect(() => {
+    // Check if the fightId exists in the prevPredictions array
+    const prevPrediction = prevPredictions.find(
+      (prediction) => prediction.fightId._id === fight._id
+    );
+
+    if (prevPrediction) {
+      setWinner(prevPrediction.winnerFighter);
+      setMethod(prevPrediction.winMethod);
+    }
+  }, [fight._id, prevPredictions]);
 
   const handleWinnerChange = (selectedWinner) => {
     setWinner(selectedWinner);
@@ -21,7 +32,11 @@ const FightItem = ({ fight, updatePrediction }) => {
 
   return (
     <div className="flex flex-row items-center justify-around h-[200px] lg:w-3/4 w-[90%] shadow-md hover:shadow-lg transition-shadow duration-300 bg-white border border-[#FFF] border-solid border-4">
-      <div className="flex flex-col items-center justify-center bg-red-100  h-full w-1/3">
+      <div
+        className={`flex flex-col items-center justify-center bg-red-100  h-full w-1/3 ${
+          winner === "red" ? "bg-red-200" : ""
+        }`}
+      >
         <button
           className={`p-2 border lg:text-xl  font-bold rounded h-full w-full ${
             winner === "red" ? "bg-red-500 text-white" : ""
@@ -63,7 +78,11 @@ const FightItem = ({ fight, updatePrediction }) => {
           Decision
         </button>
       </div>
-      <div className="flex flex-col items-center justify-center bg-blue-100  h-full w-1/3">
+      <div
+        className={`flex flex-col items-center justify-center bg-blue-100  h-full w-1/3 ${
+          winner === "blue" ? "bg-blue-200" : ""
+        }`}
+      >
         <button
           className={`p-2 border h-full w-full lg:text-xl font-bold rounded ${
             winner === "blue" ? "bg-blue-500 text-white" : ""
