@@ -60,7 +60,6 @@ const Authentication = () => {
         },
         { withCredentials: true }
       );
-      console.log("rrrr", response);
       handleLogin(response.data.token);
       toast.success("Authenticated successfully ✔ Redirecting to home page");
       setTimeout(() => {

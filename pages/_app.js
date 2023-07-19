@@ -14,13 +14,11 @@ export default function App({ Component, pageProps }) {
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     const handleStart = (url) => {
-      console.log("Router is changing ... ");
       setLoading(true);
       NProgress.start();
     };
 
     const handleComplete = (url) => {
-      console.log("Router change is complete ... ");
       setLoading(false);
       NProgress.done();
     };

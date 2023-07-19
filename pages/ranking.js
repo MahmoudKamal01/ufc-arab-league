@@ -147,7 +147,7 @@ const UserRankTable = () => {
                         ).winnerFighter === "red" ? (
                           <div className="flex justify-center">
                             <span>{fight.fighters[0].name}</span>
-                            <span className="">
+                            <span className="min-w-[20px] min-h-[30px]">
                               <Image
                                 src="/box.svg"
                                 alt="box"
@@ -181,7 +181,7 @@ const UserRankTable = () => {
                         ).winnerFighter === "blue" ? (
                           <div className="flex justify-center">
                             {fight.fighters[1].name}
-                            <span>
+                            <span className="min-w-[20px] min-h-[30px]">
                               <Image
                                 src="/box.svg"
                                 alt="box"

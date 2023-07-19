@@ -56,7 +56,6 @@ const MatchesList = ({ eventData, userPredictions }) => {
       api
         .put("/api/v1/user/predictions", body)
         .then((response) => {
-          console.log("pred res", response.data); // Response from the server after successful submission
           toast.success("Predictions submitted successfully!");
         })
         .catch((error) => {
