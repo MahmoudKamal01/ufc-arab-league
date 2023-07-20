@@ -10,7 +10,6 @@ const Loader = () => {
         <div className="bg-blue-400 w-32 h-32 absolute animate-ping rounded-full shadow-xl"></div>
         {/* <!--   ITEM 3 --> */}
         <div className="bg-white w-24 h-24 absolute animate-pulse rounded-full shadow-xl"></div>
-        {/* <!--   SVG LOGO --> */}
         <Image
           src="/log.png"
           alt="logo"
