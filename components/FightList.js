@@ -10,8 +10,8 @@ import { useAuth } from "../hooks/useAuth";
 
 const MatchesList = ({ eventData, userPredictions }) => {
   const prevPredictions = userPredictions ? userPredictions.predictions : null;
-  const date = eventData.eventDate || "2024-07-30";
-  const eventTitle = eventData.eventTitle;
+  const date = eventData?.eventDate || "2024-07-30";
+  const eventTitle = eventData?.eventTitle;
   const [isClosed, setIsClosed] = useState(false);
   const [predictions, setPredictions] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -30,8 +30,8 @@ const MatchesList = ({ eventData, userPredictions }) => {
   useEffect(() => {
     if (prevPredictions) {
       setPredictions(prevPredictions);
-      setIsLoading(false);
     }
+    setIsLoading(false);
   }, [prevPredictions]);
 
   const handleFormSubmit = () => {

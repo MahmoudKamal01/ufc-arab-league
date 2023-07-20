@@ -7,6 +7,7 @@ const FightItem = ({ fight, updatePrediction, prevPredictions }) => {
   const [method, setMethod] = useState("");
   const router = useRouter();
   const { isLoggedIn } = useAuth();
+
   useEffect(() => {
     // Check if the fightId exists in the prevPredictions array
     let prevPrediction;
@@ -45,16 +46,16 @@ const FightItem = ({ fight, updatePrediction, prevPredictions }) => {
 
   return (
     <div
-      className="flex flex-row items-center justify-around h-[200px] lg:w-3/4 w-[90%] shadow-md hover:shadow-lg transition-shadow duration-300 bg-white border border-[#FFF] border-solid border-4"
+      className={`flex flex-row items-center justify-around h-[200px] lg:w-3/4 w-[90%] shadow-md hover:shadow-lg transition-shadow duration-300 bg-white border border-[#FFF] border-solid border-4`}
       onClick={handleClick}
     >
       <div
-        className={`flex flex-col items-center justify-center bg-red-100  h-full w-1/3 ${
-          winner === "red" ? "bg-red-200" : ""
+        className={`flex flex-col items-center justify-center h-full w-1/3 ${
+          winner === "red" ? "bg-red-200" : "bg-red-100"
         }`}
       >
         <button
-          className={`p-2 border lg:text-xl  font-bold rounded h-full w-full ${
+          className={`p-2 border lg:text-xl font-bold rounded h-full w-full ${
             winner === "red" ? "bg-red-500 text-white" : ""
           } hover:bg-red-500 hover:text-white transition-colors duration-300 player-button`}
           onClick={() => handleWinnerChange("red")}
@@ -62,7 +63,7 @@ const FightItem = ({ fight, updatePrediction, prevPredictions }) => {
           {redPlayer}
         </button>
       </div>
-      <div className="flex flex-col bg-white w-[33.3%] h-full">
+      <div className="flex flex-col w-[33.3%] h-full">
         <button
           className={`h-1/3 p-2 border ${
             method === "KO/TKO" ? "bg-gray-500 text-white" : "bg-gray-100"
@@ -95,8 +96,8 @@ const FightItem = ({ fight, updatePrediction, prevPredictions }) => {
         </button>
       </div>
       <div
-        className={`flex flex-col items-center justify-center bg-blue-100  h-full w-1/3 ${
-          winner === "blue" ? "bg-blue-200" : ""
+        className={`flex flex-col items-center justify-center h-full w-1/3 ${
+          winner === "blue" ? "bg-blue-200" : "bg-blue-100"
         }`}
       >
         <button

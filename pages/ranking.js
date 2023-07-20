@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Navbar from "../components/Navbar";
 import api from "../utils/api";
 import { useAuth } from "../hooks/useAuth";
 import Loader from "../components/Loader";
 import { useRouter } from "next/router";
 import Image from "next/image";
+
 const UserRankTable = () => {
   const [userRankData, setUserRankData] = useState([]);
   const [userPredictions, setUserPredictions] = useState([]);
@@ -15,16 +16,158 @@ const UserRankTable = () => {
   const router = useRouter();
   const { getUser } = useAuth();
   const userData = getUser();
-  const username = userData ? userData.name : null;
+  const username = userData ? userData.name : "";
+  const highlightedRowRef = useRef(null);
 
   useEffect(() => {
-    if (!isLoggedIn) router.push("/login");
     const fetchStandingsData = async () => {
       try {
         const response = await api.get(
           "/api/v1/user/standings/64a8f41334a19ab5486bf513"
         );
         const standingsData = response.data.data;
+        // const standingsData = [
+        //   {
+        //     score: 25,
+        //     userId: {
+        //       name: "John Doe",
+        //     },
+        //     _id: "12555666",
+        //   },
+        //   {
+        //     score: 18,
+        //     userId: {
+        //       name: "Jane Smith",
+        //     },
+        //     _id: "23784521",
+        //   },
+        //   {
+        //     score: 30,
+        //     userId: {
+        //       name: "Mike Johnson",
+        //     },
+        //     _id: "35125478",
+        //   },
+        //   {
+        //     score: 14,
+        //     userId: {
+        //       name: "Emily Williams",
+        //     },
+        //     _id: "48213752",
+        //   },
+        //   {
+        //     score: 22,
+        //     userId: {
+        //       name: "Michael Brown",
+        //     },
+        //     _id: "59682145",
+        //   },
+        //   {
+        //     score: 10,
+        //     userId: {
+        //       name: "Sophia Lee",
+        //     },
+        //     _id: "62315798",
+        //   },
+        //   {
+        //     score: 28,
+        //     userId: {
+        //       name: "William Davis",
+        //     },
+        //     _id: "77485239",
+        //   },
+        //   {
+        //     score: 16,
+        //     userId: {
+        //       name: "Olivia Martinez",
+        //     },
+        //     _id: "84562391",
+        //   },
+        //   {
+        //     score: 31,
+        //     userId: {
+        //       name: "James Johnson",
+        //     },
+        //     _id: "91254782",
+        //   },
+        //   {
+        //     score: 19,
+        //     userId: {
+        //       name: "Ava Wilson",
+        //     },
+        //     _id: "10384562",
+        //   },
+        //   {
+        //     score: 26,
+        //     userId: {
+        //       name: "Alexander Taylor",
+        //     },
+        //     _id: "11587234",
+        //   },
+        //   {
+        //     score: 17,
+        //     userId: {
+        //       name: "Isabella White",
+        //     },
+        //     _id: "12836594",
+        //   },
+        //   {
+        //     score: 24,
+        //     userId: {
+        //       name: "Ethan Martin",
+        //     },
+        //     _id: "13245678",
+        //   },
+        //   {
+        //     score: 12,
+        //     userId: {
+        //       name: "Mia Anderson",
+        //     },
+        //     _id: "14498236",
+        //   },
+        //   {
+        //     score: 27,
+        //     userId: {
+        //       name: "Daniel Clark",
+        //     },
+        //     _id: "15987243",
+        //   },
+        //   {
+        //     score: 13,
+        //     userId: {
+        //       name: "Sofia Rodriguez",
+        //     },
+        //     _id: "16382574",
+        //   },
+        //   {
+        //     score: 21,
+        //     userId: {
+        //       name: "Matthew Lewis",
+        //     },
+        //     _id: "17853246",
+        //   },
+        //   {
+        //     score: 29,
+        //     userId: {
+        //       name: "Chloe Hernandez",
+        //     },
+        //     _id: "18125569",
+        //   },
+        //   {
+        //     score: 20,
+        //     userId: {
+        //       name: "Benjamin Allen",
+        //     },
+        //     _id: "19786423",
+        //   },
+        //   {
+        //     score: 23,
+        //     userId: {
+        //       name: "Emma Hill",
+        //     },
+        //     _id: "20847569",
+        //   },
+        // ];
 
         // Sort standings data based on score in descending order
         const sortedData = standingsData.sort((a, b) => b.score - a.score);
@@ -70,6 +213,15 @@ const UserRankTable = () => {
     setShowPredictions(false);
   };
 
+  useEffect(() => {
+    if (highlightedRowRef.current) {
+      highlightedRowRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    }
+  }, [userRankData]);
+
   if (isLoading) return <Loader />;
   return (
     <>
@@ -91,6 +243,7 @@ const UserRankTable = () => {
             <tbody>
               {userRankData.map((user, index) => (
                 <tr
+                  ref={user.userId.name === username ? highlightedRowRef : null}
                   key={user._id}
                   className={
                     user.userId.name === username

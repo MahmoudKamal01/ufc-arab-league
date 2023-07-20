@@ -6,7 +6,7 @@ import Navbar from "../components/Navbar";
 import FightList from "../components/FightList";
 
 export default function Home() {
-  const { isLoggedIn, handleLogout } = useAuth();
+  const { isLoggedIn } = useAuth();
   const [event, setEvent] = useState(null);
   const [userPredictions, setUserPredictions] = useState({});
   const [isLoading, setIsLoading] = useState(true);
@@ -15,18 +15,20 @@ export default function Home() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const eventDataResponse = await api.get("/api/v1/user/");
+        // Use Promise.all to make both requests concurrently
+        const [eventDataResponse, userPredictionsResponse] = await Promise.all([
+          api.get("/api/v1/user/"),
+          isLoggedIn ? api.get("/api/v1/user/predictions/") : null,
+        ]);
+
         const eventData = eventDataResponse.data.data;
         setEvent(eventData);
 
-        let userPredictionsResponse;
-        let userPredictionsData;
-        if (isLoggedIn) {
-          userPredictionsResponse = await api.get("/api/v1/user/predictions/");
-          userPredictionsData = userPredictionsResponse.data.data;
+        // Check if user is logged in and data exists before setting userPredictions
+        if (isLoggedIn && userPredictionsResponse) {
+          const userPredictionsData = userPredictionsResponse.data.data;
+          setUserPredictions(userPredictionsData);
         }
-
-        setUserPredictions(userPredictionsData);
 
         setIsLoading(false);
       } catch (error) {

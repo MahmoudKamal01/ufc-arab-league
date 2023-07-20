@@ -33,8 +33,8 @@ const Signup = () => {
       return;
     }
 
-    if (name.trim().length < 6) {
-      toast.error("Name should have a minimum of 6 characters");
+    if (name.trim().length < 3) {
+      toast.error("Name should have a minimum of 3 characters");
       return;
     }
 
