@@ -4,6 +4,7 @@ import api from "../utils/api";
 import { useAuth } from "../hooks/useAuth";
 import Loader from "../components/Loader";
 import { useRouter } from "next/router";
+import { toast } from "react-toastify";
 import Image from "next/image";
 
 const UserRankTable = () => {
@@ -197,15 +198,20 @@ const UserRankTable = () => {
   }, [username]);
 
   const handleShowPredictions = async (userId) => {
-    try {
-      const userPredictionsResponse = await api.get(
-        `/api/v1/user/predictions/${userId}`
-      );
-      const userPredictionsData = userPredictionsResponse.data.data.predictions;
-      setUserPredictions(userPredictionsData);
-      setShowPredictions(true);
-    } catch (error) {
-      console.error("Failed to fetch user predictions:", error);
+    if (isLoggedIn) {
+      try {
+        const userPredictionsResponse = await api.get(
+          `/api/v1/user/predictions/${userId}`
+        );
+        const userPredictionsData =
+          userPredictionsResponse.data.data.predictions;
+        setUserPredictions(userPredictionsData);
+        setShowPredictions(true);
+      } catch (error) {
+        console.error("Failed to fetch user predictions:", error);
+      }
+    } else {
+      toast.error("Login first to see the predictions of other users!");
     }
   };
 
