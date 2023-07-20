@@ -34,7 +34,7 @@ export default function App({ Component, pageProps }) {
   return (
     <>
       <Head>
-        <link rel="shortcut icon" href="/lgo.svg" />
+        <link rel="shortcut icon" href="/log.png" />
         <title>UFC Arab League</title>
       </Head>
       <AuthProvider>

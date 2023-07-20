@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useState, useEffect, useContext } from "react";
 import { useAuth } from "../hooks/useAuth";
-
+import Image from "next/image";
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { isLoggedIn, handleLogout } = useAuth();
