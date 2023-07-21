@@ -14,25 +14,20 @@ export default function Home() {
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        // Use Promise.all to make both requests concurrently
-        const [eventDataResponse, userPredictionsResponse] = await Promise.all([
-          api.get("/api/v1/user/"),
-          isLoggedIn ? api.get("/api/v1/user/predictions/") : null,
-        ]);
-
-        const eventData = eventDataResponse.data.data;
-        setEvent(eventData);
-
-        // Check if user is logged in and data exists before setting userPredictions
-        if (isLoggedIn && userPredictionsResponse) {
+      const eventDataResponse = await api.get("/api/v1/user/");
+      const eventData = eventDataResponse.data.data;
+      setEvent(eventData);
+      let userPredictionsResponse = null;
+      console.log("aaaa");
+      if (isLoggedIn) {
+        userPredictionsResponse = await api.get("/api/v1/user/predictions");
+        if (!userPredictionsResponse) {
+          setIsLoading(false);
+        } else {
           const userPredictionsData = userPredictionsResponse.data.data;
           setUserPredictions(userPredictionsData);
+          setIsLoading(false);
         }
-
-        setIsLoading(false);
-      } catch (error) {
-        console.error(error);
       }
     };
 
