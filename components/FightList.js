@@ -42,7 +42,10 @@ const MatchesList = ({ eventData, userPredictions }) => {
       }
 
       const hasMissingPrediction = predictions.some(
-        (prediction) => !prediction.winnerFighter || !prediction.winMethod
+        (prediction) =>
+          !prediction.winnerFighter ||
+          !prediction.winMethod ||
+          !prediction.winTime
       );
 
       if (hasMissingPrediction) {
