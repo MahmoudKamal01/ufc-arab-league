@@ -3,7 +3,8 @@ import axios from "axios";
 import Cookies from "js-cookie";
 
 // const apiUrl = "http://localhost:4000";
-const apiUrl = "https://vivacious-lime-shawl.cyclic.app";
+// const apiUrl = "https://vivacious-lime-shawl.cyclic.app";
+const apiUrl = "https://ufc-arab-league.onrender.com";
 
 const axiosInstance = axios.create({
   baseURL: apiUrl,

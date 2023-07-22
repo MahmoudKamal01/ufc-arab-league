@@ -5,6 +5,7 @@ import { useAuth } from "../hooks/useAuth";
 const FightItem = ({ fight, updatePrediction, prevPredictions }) => {
   const [winner, setWinner] = useState("");
   const [method, setMethod] = useState("");
+  const [winTime, setWinTime] = useState("");
   const router = useRouter();
   const { isLoggedIn } = useAuth();
 
@@ -20,17 +21,23 @@ const FightItem = ({ fight, updatePrediction, prevPredictions }) => {
     if (prevPrediction) {
       setWinner(prevPrediction.winnerFighter);
       setMethod(prevPrediction.winMethod);
+      setWinTime(prevPrediction.winTime || "");
     }
   }, [fight._id, prevPredictions]);
 
   const handleWinnerChange = (selectedWinner) => {
     setWinner(selectedWinner);
-    updatePrediction(fight._id, selectedWinner, method);
+    updatePrediction(fight._id, selectedWinner, method, winTime);
   };
 
   const handleMethodChange = (selectedMethod) => {
     setMethod(selectedMethod);
-    updatePrediction(fight._id, winner, selectedMethod);
+    updatePrediction(fight._id, winner, selectedMethod, winTime);
+  };
+
+  const handleWinTimeChange = (selectedWinTime) => {
+    setWinTime(selectedWinTime);
+    updatePrediction(fight._id, winner, method, selectedWinTime);
   };
 
   const redPlayer =
@@ -93,6 +100,28 @@ const FightItem = ({ fight, updatePrediction, prevPredictions }) => {
           onClick={() => handleMethodChange("Decision")}
         >
           Decision
+        </button>
+      </div>
+      <div className="flex flex-col w-[33.3%] h-full">
+        <button
+          className={`h-1/2 p-2 border ${
+            winTime === "over" ? "bg-gray-500 text-white" : "bg-gray-100"
+          } ${
+            winTime === "over" ? "text-white" : ""
+          } hover:bg-gray-500 hover:text-white transition-colors duration-300`}
+          onClick={() => handleWinTimeChange("over")}
+        >
+          Over
+        </button>
+        <button
+          className={`h-1/2 p-2 border ${
+            winTime === "under" ? "bg-gray-500 text-white" : "bg-gray-100"
+          } ${
+            winTime === "under" ? "text-white" : ""
+          } hover:bg-gray-500 hover:text-white transition-colors duration-300`}
+          onClick={() => handleWinTimeChange("under")}
+        >
+          Under
         </button>
       </div>
       <div

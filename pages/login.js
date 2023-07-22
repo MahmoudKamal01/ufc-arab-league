@@ -139,7 +139,7 @@ const Authentication = () => {
                         onChange={(e) => setEmail(e.target.value)}
                       />
                     </div>
-                    <div className="col-span-6 flex items-center gap-4">
+                    <div className="col-span-6 flex lg:flex-row flex-col items-center gap-4">
                       <button
                         type="submit"
                         className="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500 dark:hover:bg-blue-700 dark:hover:text-white"
@@ -147,6 +147,12 @@ const Authentication = () => {
                       >
                         {isLoading ? "Logging in..." : "Login"}
                       </button>
+                      <Link
+                        className="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500 dark:hover:bg-blue-700 dark:hover:text-white"
+                        href="/signup"
+                      >
+                        Signup
+                      </Link>
                     </div>
                   </form>
                 </>

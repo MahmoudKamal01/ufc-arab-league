@@ -53,6 +53,8 @@ const MatchesList = ({ eventData, userPredictions }) => {
       const body = {
         predictions: predictions,
       };
+
+      console.log("object", body);
       api
         .put("/api/v1/user/predictions", body)
         .then((response) => {
@@ -67,7 +69,7 @@ const MatchesList = ({ eventData, userPredictions }) => {
     }
   };
 
-  const updatePrediction = (fightId, winner, winMethod) => {
+  const updatePrediction = (fightId, winner, winMethod, winTime) => {
     const index = predictions.findIndex(
       (prediction) => prediction.fightId._id === fightId
     );
@@ -76,7 +78,7 @@ const MatchesList = ({ eventData, userPredictions }) => {
       setPredictions((prevState) =>
         prevState.map((prediction, i) =>
           i === index
-            ? { ...prediction, winnerFighter: winner, winMethod }
+            ? { ...prediction, winnerFighter: winner, winMethod, winTime }
             : prediction
         )
       );
@@ -87,6 +89,7 @@ const MatchesList = ({ eventData, userPredictions }) => {
           fightId: eventData.fights.find((fight) => fight._id === fightId),
           winnerFighter: winner,
           winMethod,
+          winTime,
         },
       ]);
     }

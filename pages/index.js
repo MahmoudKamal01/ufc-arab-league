@@ -20,7 +20,11 @@ export default function Home() {
       let userPredictionsResponse = null;
       console.log("aaaa");
       if (isLoggedIn) {
-        userPredictionsResponse = await api.get("/api/v1/user/predictions");
+        try {
+          userPredictionsResponse = await api.get("/api/v1/user/predictions");
+        } catch (error) {
+          setUserPredictions({});
+        }
         if (!userPredictionsResponse) {
           setIsLoading(false);
         } else {
@@ -29,6 +33,7 @@ export default function Home() {
           setIsLoading(false);
         }
       }
+      setIsLoading(false);
     };
 
     fetchData();

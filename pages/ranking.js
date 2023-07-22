@@ -27,148 +27,6 @@ const UserRankTable = () => {
           "/api/v1/user/standings/64a8f41334a19ab5486bf513"
         );
         const standingsData = response.data.data;
-        // const standingsData = [
-        //   {
-        //     score: 25,
-        //     userId: {
-        //       name: "John Doe",
-        //     },
-        //     _id: "12555666",
-        //   },
-        //   {
-        //     score: 18,
-        //     userId: {
-        //       name: "Jane Smith",
-        //     },
-        //     _id: "23784521",
-        //   },
-        //   {
-        //     score: 30,
-        //     userId: {
-        //       name: "Mike Johnson",
-        //     },
-        //     _id: "35125478",
-        //   },
-        //   {
-        //     score: 14,
-        //     userId: {
-        //       name: "Emily Williams",
-        //     },
-        //     _id: "48213752",
-        //   },
-        //   {
-        //     score: 22,
-        //     userId: {
-        //       name: "Michael Brown",
-        //     },
-        //     _id: "59682145",
-        //   },
-        //   {
-        //     score: 10,
-        //     userId: {
-        //       name: "Sophia Lee",
-        //     },
-        //     _id: "62315798",
-        //   },
-        //   {
-        //     score: 28,
-        //     userId: {
-        //       name: "William Davis",
-        //     },
-        //     _id: "77485239",
-        //   },
-        //   {
-        //     score: 16,
-        //     userId: {
-        //       name: "Olivia Martinez",
-        //     },
-        //     _id: "84562391",
-        //   },
-        //   {
-        //     score: 31,
-        //     userId: {
-        //       name: "James Johnson",
-        //     },
-        //     _id: "91254782",
-        //   },
-        //   {
-        //     score: 19,
-        //     userId: {
-        //       name: "Ava Wilson",
-        //     },
-        //     _id: "10384562",
-        //   },
-        //   {
-        //     score: 26,
-        //     userId: {
-        //       name: "Alexander Taylor",
-        //     },
-        //     _id: "11587234",
-        //   },
-        //   {
-        //     score: 17,
-        //     userId: {
-        //       name: "Isabella White",
-        //     },
-        //     _id: "12836594",
-        //   },
-        //   {
-        //     score: 24,
-        //     userId: {
-        //       name: "Ethan Martin",
-        //     },
-        //     _id: "13245678",
-        //   },
-        //   {
-        //     score: 12,
-        //     userId: {
-        //       name: "Mia Anderson",
-        //     },
-        //     _id: "14498236",
-        //   },
-        //   {
-        //     score: 27,
-        //     userId: {
-        //       name: "Daniel Clark",
-        //     },
-        //     _id: "15987243",
-        //   },
-        //   {
-        //     score: 13,
-        //     userId: {
-        //       name: "Sofia Rodriguez",
-        //     },
-        //     _id: "16382574",
-        //   },
-        //   {
-        //     score: 21,
-        //     userId: {
-        //       name: "Matthew Lewis",
-        //     },
-        //     _id: "17853246",
-        //   },
-        //   {
-        //     score: 29,
-        //     userId: {
-        //       name: "Chloe Hernandez",
-        //     },
-        //     _id: "18125569",
-        //   },
-        //   {
-        //     score: 20,
-        //     userId: {
-        //       name: "Benjamin Allen",
-        //     },
-        //     _id: "19786423",
-        //   },
-        //   {
-        //     score: 23,
-        //     userId: {
-        //       name: "Emma Hill",
-        //     },
-        //     _id: "20847569",
-        //   },
-        // ];
 
         // Sort standings data based on score in descending order
         const sortedData = standingsData.sort((a, b) => b.score - a.score);
@@ -205,10 +63,12 @@ const UserRankTable = () => {
         );
         const userPredictionsData =
           userPredictionsResponse.data.data.predictions;
+        console.log("qqq", userPredictionsData);
         setUserPredictions(userPredictionsData);
         setShowPredictions(true);
       } catch (error) {
         console.error("Failed to fetch user predictions:", error);
+        toast.error("Login first to see the predictions of other users!");
       }
     } else {
       toast.error("Login first to see the predictions of other users!");
@@ -249,16 +109,18 @@ const UserRankTable = () => {
             <tbody>
               {userRankData.map((user, index) => (
                 <tr
-                  ref={user.userId.name === username ? highlightedRowRef : null}
+                  ref={
+                    user.userId?.name === username ? highlightedRowRef : null
+                  }
                   key={user._id}
                   className={
-                    user.userId.name === username
+                    user.userId?.name === username
                       ? "bg-yellow-300"
                       : "hover:bg-gray-200"
                   }
                 >
                   <td className="py-2 text-center">{index + 1}</td>
-                  <td className="py-2 text-center">{user.userId.name}</td>
+                  <td className="py-2 text-center">{user.userId?.name}</td>
                   <td className="py-2 text-center">{user.score}</td>
                   <td className="py-2 text-center">
                     <button
@@ -285,6 +147,7 @@ const UserRankTable = () => {
                     <th className="p-2 text-center">Fight</th>
                     <th className="p-2 text-center">Red Corner</th>
                     <th className="p-2 text-center">Win Method</th>
+                    <th className="p-2 text-center">Win Time</th>
                     <th className="p-2 text-center">Blue Corner</th>
                   </tr>
                 </thead>
@@ -324,6 +187,13 @@ const UserRankTable = () => {
                           userPredictions.find(
                             (p) => p.fightId._id === fight._id
                           )?.winMethod
+                        }
+                      </td>
+                      <td className={`p-2 text-center bg-gray-300 lg:px-4`}>
+                        {
+                          userPredictions.find(
+                            (p) => p.fightId._id === fight._id
+                          )?.winTime
                         }
                       </td>
                       <td
