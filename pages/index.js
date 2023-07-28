@@ -70,7 +70,7 @@ export default function Home() {
               Scoring System
             </h2>
             <div className="mb-4">
-              <h3 className="text-lg font-bold mb-2">Main Card Fights:</h3>
+              {/* <h3 className="text-lg font-bold mb-2">Main Card Fights:</h3> */}
               <p>
                 Correctly predicting the winner fighter:{" "}
                 <span className="font-bold text-blue-500">3 points</span>
