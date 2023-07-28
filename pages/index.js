@@ -73,6 +73,23 @@ export default function Home() {
               <h3 className="text-lg font-bold mb-2">Main Card Fights:</h3>
               <p>
                 Correctly predicting the winner fighter:{" "}
+                <span className="font-bold text-blue-500">3 points</span>
+              </p>
+              <p>
+                Correctly predicting the win method (KO/TKO, submission,
+                decision):{" "}
+                <span className="font-bold text-red-500">2 points</span>
+              </p>
+              <p>
+                Correctly predicting whether the fight goes over or under the
+                middle of the fight duration:{" "}
+                <span className="font-bold  text-yellow-500">1 point</span>
+              </p>
+            </div>
+            {/* <div className="mb-4">
+              <h3 className="text-lg font-bold mb-2">Main Card Fights:</h3>
+              <p>
+                Correctly predicting the winner fighter:{" "}
                 <span className="font-bold text-blue-500">10 points</span>
               </p>
               <p>
@@ -83,8 +100,8 @@ export default function Home() {
                 Getting both the winner fighter and win method correct:{" "}
                 <span className="font-bold  text-yellow-500">30 points</span>
               </p>
-            </div>
-            <div className="mb-4">
+            </div> */}
+            {/* <div className="mb-4">
               <h3 className="text-lg font-bold mb-2">Prelims Card Fights:</h3>
               <p>
                 Correctly predicting the winner fighter:{" "}
@@ -115,7 +132,7 @@ export default function Home() {
                 Getting both the winner fighter and win method correct:{" "}
                 <span className="font-bold text-yellow-500">14 points</span>
               </p>
-            </div>
+            </div> */}
             <button
               className="px-4 py-2 bg-gray-200 text-gray-800 font-bold rounded mt-4 w-full"
               onClick={handleCloseModal}
