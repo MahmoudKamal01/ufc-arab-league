@@ -27,11 +27,25 @@ const UserRankTable = () => {
           "/api/v1/user/standings/64a8f41334a19ab5486bf513"
         );
         const standingsData = response.data.data;
-
+        console.log("aaa", standingsData);
         // Sort standings data based on score in descending order
-        const sortedData = standingsData.sort((a, b) => b.score - a.score);
+        const sortedData = standingsData.sort((a, b) => a.rank - b.rank);
+
+        // // Assign ranks, handling ties
+        // let rank = 1;
+        // let prevScore = sortedData[0].score;
+        // sortedData.forEach((user, index) => {
+        //   if (user.score === prevScore) {
+        //     user.rank = rank;
+        //   } else {
+        //     user.rank = index + 1;
+        //     rank = index + 1;
+        //   }
+        //   prevScore = user.score;
+        // });
 
         setUserRankData(sortedData);
+        highlightedRowRef.current = userData ? userData.rank - 1 : null;
       } catch (error) {
         console.error("Failed to fetch standings data:", error);
       }
@@ -107,19 +121,17 @@ const UserRankTable = () => {
               </tr>
             </thead>
             <tbody>
-              {userRankData.map((user, index) => (
+              {userRankData.map((user) => (
                 <tr
-                  ref={
-                    user.userId?.name === username ? highlightedRowRef : null
-                  }
+                  ref={user.rank === userData?.rank ? highlightedRowRef : null}
                   key={user._id}
                   className={
-                    user.userId?.name === username
+                    user.rank === userData?.rank
                       ? "bg-yellow-300"
                       : "hover:bg-gray-200"
                   }
                 >
-                  <td className="py-2 text-center">{index + 1}</td>
+                  <td className="py-2 text-center">{user.rank}</td>
                   <td className="py-2 text-center">{user.userId?.name}</td>
                   <td className="py-2 text-center">{user.score}</td>
                   <td className="py-2 text-center">
@@ -139,7 +151,9 @@ const UserRankTable = () => {
       {showPredictions && (
         <div className="fixed top-0 left-0 right-0 bottom-0 bg-gray-900 bg-opacity-75 flex items-center justify-center">
           <div className="bg-white p-8 rounded">
-            <h2 className="text-2xl font-bold mb-4">User Predictions</h2>
+            <h2 className="text-2xl font-bold mb-4">
+              {userData?.name} {"`"}s Predictions
+            </h2>
             <div className="overflow-x-auto overflow-y-auto max-h-96">
               <table className="min-w-full table-auto border border-gray-300 rounded">
                 <thead>
