@@ -98,21 +98,6 @@ const MatchesList = ({ eventData, userPredictions }) => {
     }
   };
 
-  if (isClosed) {
-    return (
-      <>
-        <div className="bg-gray-900 min-h-screen flex flex-col items-center justify-center space-y-4">
-          <h2 className="text-white bold text-xl p-4 m-2 text-center">
-            Make your predictions for the upcoming UFC event:
-          </h2>
-          <h1 className="text-[#FACC15] font-bold text-4xl tracking-widest text-2xl">
-            {eventTitle}
-          </h1>
-          <Countdown date={date} />
-        </div>
-      </>
-    );
-  }
 
   if (isLoading && isLoggedIn) {
     return <Loader />; // Show a loading state
